@@ -5,7 +5,7 @@ phases:
     commands:
       - echo Installing dependencies
 
-  pre-build:
+  pre_build:
       commands:
         - echo Logging into ECR...
         - aws ecr get-login-password --region ap-south-1 | docker login --username AWS --password-stdin 381492143677.dkr.ecr.ap-south-1.amazonaws.com
@@ -18,7 +18,7 @@ phases:
       - docker build -t myapp .
       - docker tag myapp:latest 381492143677.dkr.ecr.ap-south-1.amazonaws.com/myapp:latest
 
-  post-build:
+  post_build:
     commands:
       - echo Pushing image
       - docker push 381492143677.dkr.ecr.ap-south-1.amazonaws.com/myapp:latest
