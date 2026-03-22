@@ -1,0 +1,24 @@
+version: 0.2
+
+phases:
+  install:
+    commands:
+      - echo Installing dependencies
+
+    pre-build:
+      commands:
+        - echo Logging into ECR...
+        - aws ecr get-login-password --region ap-south-1 | docker login --username AWS --password-stdin 381492143677.dkr.ecr.ap-south-1.amazonaws.com
+
+    build:
+      commands:
+        - echo Building project
+        - mvn clean package
+        - echo Building Docker image
+        - docker build -t myapp .
+        - docker tag myapp:latest 381492143677.dkr.ecr.ap-south-1.amazonaws.com/myapp:latest
+
+    post-build:
+      commands:
+        - echo Pushing image
+        - docker push 381492143677.dkr.ecr.ap-south-1.amazonaws.com/myapp:latest
