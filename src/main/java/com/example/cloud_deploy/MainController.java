@@ -17,4 +17,9 @@ public class MainController {
     public String getHealth() {
         return "OK";
     }
+
+    @GetMapping("/version")
+    public String getVersion() {
+        return "0.1";
+    }
 }
